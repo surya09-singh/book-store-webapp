@@ -1,0 +1,69 @@
+{
+  "users": [
+    {
+      "email": "modi@gmail.com",
+      "password": "$2a$10$kRh89rDjBaUs0bJqYb3I/OD8VhMsEvn.oIIDxADoZlT8E1AzYpsZG",
+      "name": "Modi ",
+      "type": "1",
+      "id": 1
+    },
+    {
+      "email": "yogi@gmail.com",
+      "password": "$2a$10$WuurTZ7xLueXcTLrPCgVdO/fsKyI1gYDrY3ShtWBzchYQGvUhyu7e",
+      "name": "yogi",
+      "type": "admin",
+      "id": 2
+    }
+  ],
+  "author": [
+    {
+      "authorname": "Modi",
+      "speciality": "Pm",
+      "id": 1
+    },
+    {
+      "authorname": "test",
+      "speciality": "test",
+      "id": 2
+    }
+  ],
+  "rack": [
+    {
+      "racknumber": "1",
+      "sortoder": "12",
+      "rackcapacity": "123",
+      "rackcapacityutilized": "9",
+      "id": 1
+    },
+    {
+      "racknumber": "2",
+      "sortoder": "3",
+      "rackcapacity": "7",
+      "rackcapacityutilized": "vff",
+      "id": 2
+    }
+  ],
+  "category": [
+    {
+      "categoryname": "Super",
+      "code": "JT-1",
+      "id": 1
+    }
+  ],
+  "bookmodel": [
+    {
+      "name": "Denberg",
+      "isbn": "1",
+      "publisheryear": "2012",
+      "volume": "1",
+      "authorid": "1",
+      "categoryid": "Select Category ID",
+      "rackid": "1",
+      "copiescount": "23",
+      "id": 1
+    }
+    
+    
+    
+  ]
+}
