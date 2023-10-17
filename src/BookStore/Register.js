@@ -6,6 +6,7 @@ import {useDispatch } from 'react-redux';
 
  function Register(){
   const dispatch = useDispatch()
+  
     const{
         register,
         handleSubmit,
@@ -15,7 +16,7 @@ import {useDispatch } from 'react-redux';
                 name:data.name,
                 email:data.email,
                 password:data.password,
-                type:data.type,
+                role:data.role,
             }
             console.log(formdata);
             fetch(' http://localhost:5000/register',{
@@ -27,7 +28,7 @@ import {useDispatch } from 'react-redux';
             .then(response =>{
               console.log(response)
               if(response.accessToken){
-                dispatch(login(response.accessToken))
+                dispatch(login({token:response.accessToken, role:response.role}))
               }
               
             })
@@ -50,8 +51,8 @@ import {useDispatch } from 'react-redux';
       </Form.Group>
       
       <Form.Label>Role</Form.Label>
-      <Form.Select {...register('type')} aria-label="Default select example">
-      <option name='type'>Open this select menu</option>
+      <Form.Select {...register('role')} aria-label="Default select example">
+      <option name='role'>Open this select menu</option>
       <option value="admin">Admin</option>
       <option value="user">User</option>
     </Form.Select>

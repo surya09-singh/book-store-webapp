@@ -3,10 +3,16 @@ import { login } from './AuthSlice';
 import {useDispatch } from 'react-redux';
 import{Form,Button} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import User from "./User";
+import Admin from "./Admin";
+
 
 function Login(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const authState = useSelector((state) => state.auth);
+ 
 
     const LoginPage = (data) =>{
         let formdata = {
@@ -22,9 +28,14 @@ function Login(){
         .then(response=>{
           console.log(response)
           if(response.accessToken){
-            dispatch(login(response.accessToken))
-           navigate('/bookpage')
+            dispatch(login({token:response.accessToken, role: response.user.role}))
+          if(response.user.role =='admin'){
+              navigate('/admin')
+            }else{
+              navigate('/user')
+            }
           }
+          
         })
     }
   const {

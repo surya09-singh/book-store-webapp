@@ -1,50 +1,70 @@
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
-function BookModel() {
-  const [users, setUsers] = useState();
-  const [dataitem, setdataitem] = useState();
-  const [rackers, setRackers] = useState();
-  const [refrash,setRefrash] = useState();
-  const [savedata,setSavedata] = useState();
+function UpdateAdmin(){
+    const { register, handleSubmit,setValue } = useForm();
+    const [users,setUsers] = useState([]);
+    const [rackers,setRackers] = useState([]);
+    const [dataitem,setDataitem] = useState([]);
+    const [formdata,setFormdata] = useState([]);
+    const location = useLocation();
+    const navigate = useNavigate();
 
-  const BookPage = (data) => {
-  let check = savedata?.find(d => d.isbn === data.isbn)
-   if (check) {
-    alert('isbn number already used ');
-    return;
-   }
-    let formdata = {
-      name: data.name,
-      isbn: data.isbn,
-      publisheryear: data.publisheryear,
-      volume: data.volume,
-      authorid: data.authorid,
-      categoryid: data.categoryid,
-      rackid: data.rackid,
-      copiescount: data.copiescount,
-    };
-    fetch("http://localhost:5000/bookmodel", {
-      method: "PUT",
-      body: JSON.stringify(formdata),
-      headers: { "Content-Type": "application/json" },
+    function Updatedpage(data){
+        const formdata = {
+            name:data.name,
+            isbn:data.isbn,
+            publisheryear:data.publisheryear,
+            volume:data.volume,
+            authorid:data.authorid,
+            categoryid:data.categoryid,
+            rackid:data.rackid,
+            copiescount:data.copiescount,
+        }
+        fetch(`http://localhost:5000/bookmodel/${location.state}`,{
+            method: 'PUT',
+            body: JSON.stringify(formdata),
+            headers: {'Content-Type': 'application/json'},
+        })
+        .then(res => res.json())
+    .then(data => {
+        console.log(data)
+        navigate('/admin')
+
     })
-      .then((res) => res.json())
-      .then((response) => {
-        console.log(response);
-      });
-  };
+    }
+    
 
-  useEffect(() => {
-    fetch(" http://localhost:5000/author")
+useEffect(()=>{
+    fetch(`http://localhost:5000/bookmodel/${location.state}`)
+    .then((response) => response.json())    
+    .then((data)=>{
+        console.log(data);
+        setFormdata(data);
+        setValue('name',data.name)
+        setValue('isbn',data.isbn)
+        setValue('publisheryear',data.publisheryear)
+        setValue('volume',data.volume)
+        setValue('authorid',data.authorid)
+        setValue('categoryid',data.categoryid)
+        setValue('rackid',data.rackid)
+        setValue('copiescount',data.copiescount)
+        
+        
+    })
+},[location])
+useEffect(() => {
+    fetch('http://localhost:5000/author')
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
         setUsers(data);
+      
       });
-  }, [!refrash]);
+  }, []);
 
   useEffect(() => {
     fetch(" http://localhost:5000/rack")
@@ -53,45 +73,26 @@ function BookModel() {
         console.log(data);
         setRackers(data);
       });
-  }, [!refrash]);
-
+  }, []);
   useEffect(() => {
     fetch("  http://localhost:5000/category")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setdataitem(data);
+        setDataitem(data);
       });
-  }, [!refrash]);
+  }, []);
 
-  const { register, handleSubmit } = useForm();
 
-  useEffect((data)=>{
-  axios.get(' http://localhost:5000/bookmodel')
-  .then(function (response) {
-    console.log(response.data);
-    setSavedata(response.data)
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-  .finally(function () {
-  
-  });
-
- },[])
- 
-   
- 
-
-  return (
-    <div onSubmit={handleSubmit(BookPage)}>
-      <Form>
+    return(
+        <div>
+            <Form onSubmit={handleSubmit(Updatedpage)}>
         <Form.Label>Book Model</Form.Label>
         <Form.Group className="mb-3" controlId="formGroupName">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="name"
+            // value={formdata.name}
             placeholder="Enter Name"
             {...register("name")}
           />
@@ -101,6 +102,7 @@ function BookModel() {
           <Form.Label>ISBN</Form.Label>
           <Form.Control
             type="isbn"
+            // value={formdata.isbn}
             placeholder="Enter isbn"
             {...register("isbn")}
           />
@@ -111,6 +113,7 @@ function BookModel() {
           <Form.Label>publisher Year</Form.Label>
           <Form.Control
             type="publisheryear"
+            // value={formdata.publisheryear}
             placeholder="Publisher Year"
             {...register("publisheryear")}
           />
@@ -119,6 +122,7 @@ function BookModel() {
           <Form.Label>Volume</Form.Label>
           <Form.Control
             type="volume"
+            // value={formdata.volume}
             placeholder="Volume"
             {...register("volume")}
           />
@@ -173,6 +177,7 @@ function BookModel() {
           <Form.Label>Copies Count</Form.Label>
           <Form.Control
             type="copiescount"
+            // value={formdata.copiescount}
             placeholder="Copies Count"
             {...register("copiescount")}
           />
@@ -184,7 +189,7 @@ function BookModel() {
   
         
       </Form>
-    </div>
-  );
+        </div>
+    )
 }
-export default BookModel;
+export default UpdateAdmin;

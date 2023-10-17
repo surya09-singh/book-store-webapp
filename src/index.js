@@ -11,11 +11,18 @@ import Register from './BookStore/Register';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { PersistGate, } from 'redux-persist/integration/react'
-import Dashboard from './BookStore/Dashboard';
+import Admin from './BookStore/Admin';
 import BookModel from './BookStore/BookModel';
 import AuthorModel from './BookStore/AuthorModel';
 import RackModel from './BookStore/RackModel';
 import Category from './BookStore/Category';
+import User from './BookStore/User';
+import UpdateAdmin from './BookStore/UpdateAdmin';
+import ProtectedRoute from './BookStore/ProtectedRoute';
+import ProtectedUserRoute from './BookStore/ProtectedUserRoute';
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,14 +32,23 @@ root.render(
     <BrowserRouter>
     <SetNavbar />
     <Routes>
-      <Route path='/' element={<App/>}/>
-      <Route path='/register' element={<Register/>}/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/dashboard' element={<Dashboard/>}/>
-      <Route path='/bookmodel' element={<BookModel/>}/>
-      <Route path='/authormodel' element={<AuthorModel/>}/>
-      <Route path='/rackmodel' element={<RackModel/>}/>
-      <Route path='/category' element={<Category/>}/>
+    <Route exact path='/bookmodel' element={<BookModel/>}/>
+    <Route exact path='/Updateadmin' element={<UpdateAdmin/>}/>
+    <Route exact path='/register' element={<Register/>}/>
+    <Route path='/' element={<Login/>}/>
+    <Route exact path='/' element={<ProtectedRoute/>}>
+      <Route exact path='/admin' element={<Admin/>}/>
+      <Route exact path='/app' element={<App/>}/>
+      
+      <Route exact path='/authormodel' element={<AuthorModel/>}/>
+      <Route exact path='/rackmodel' element={<RackModel/>}/>
+      <Route exact path='/category' element={<Category/>}/>
+      
+      </Route>
+      <Route exact path='/' element={<ProtectedUserRoute/>}>
+      <Route exact path='/user' element={<User/>}/>
+      </Route>
+  
      
     </Routes>
     </BrowserRouter>

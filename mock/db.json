@@ -2,17 +2,24 @@
   "users": [
     {
       "email": "modi@gmail.com",
-      "password": "$2a$10$kRh89rDjBaUs0bJqYb3I/OD8VhMsEvn.oIIDxADoZlT8E1AzYpsZG",
-      "name": "Modi ",
-      "type": "1",
+      "password": "$2a$10$XkklEquWMGR1CUEE84ZD0eglT8P9sVN03FT1Gu.v8ROD2pjoITHN.",
+      "name": "modi",
+      "role": "user",
       "id": 1
     },
     {
-      "email": "yogi@gmail.com",
-      "password": "$2a$10$WuurTZ7xLueXcTLrPCgVdO/fsKyI1gYDrY3ShtWBzchYQGvUhyu7e",
-      "name": "yogi",
-      "type": "admin",
+      "email": "test@gmail.com",
+      "password": "$2a$10$sDWHWRT6YbpTGpK5Jda9c.Moq5CjLE1ALUWd3x3unIvJzdZBe06vq",
+      "name": "test",
+      "role": "user",
       "id": 2
+    },
+    {
+      "email": "raju@gmail.com",
+      "password": "$2a$10$Tr6WoVcI4G2b/66.k/iSyOd7lP5ESgeXiGlfAvnJbv6wemfe3XZWi",
+      "name": "raju",
+      "role": "admin",
+      "id": 3
     }
   ],
   "author": [
@@ -57,13 +64,21 @@
       "publisheryear": "2012",
       "volume": "1",
       "authorid": "1",
-      "categoryid": "Select Category ID",
+      "categoryid": "1",
       "rackid": "1",
       "copiescount": "23",
       "id": 1
+    },
+    {
+      "name": "Lardmount",
+      "isbn": "2",
+      "publisheryear": "2001",
+      "volume": "2",
+      "authorid": "2",
+      "categoryid": "1",
+      "rackid": "2",
+      "copiescount": "90",
+      "id": 2
     }
-    
-    
-    
   ]
 }

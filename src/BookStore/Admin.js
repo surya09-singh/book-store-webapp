@@ -1,33 +1,57 @@
 
 import { useEffect,useState } from 'react';
 import { Table,Button } from "react-bootstrap";
+import {  RingLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 
 
- function Dashboard(){
+
+ function Admin(){
     const [users,setUsers] = useState();
-
+    const [loading,setLoading] = useState();
+    const [refrash,setRefrash] = useState();
+    const navigate = useNavigate();
     function handleDelete(Name) {
-        // setLoading(true);
+        setLoading(true);
         fetch(`http://localhost:5000/bookmodel/${Name}`, {
           method: "DELETE",
         })
           .then((response) => response.json())
           .then((data) => {
-            // setRefrash(!refrash);
-            // setLoading(false);
-            // showToast();
+            setRefrash(!refrash);
+            setLoading(false);
+            showToast();
            
           });
+      }
+      const showToast=()=>{
+        toast.success('🦄 Delete Succesfully', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
+      }
+      function handleEdit(Name) {
+        navigate("/updateadmin", {state: Name})
+        setLoading(true);
       }
 
 
     useEffect(()=>{
+      setLoading(true);
         fetch('http://localhost:5000/bookmodel')
         .then((response) => response.json())
         .then((data)=>{
             console.log(data)
             setUsers(data)
+            setLoading(false);
         }).catch((err) => {
             console.log("please start json server", err)
           })
@@ -52,6 +76,7 @@ import { Table,Button } from "react-bootstrap";
             <th>Delete</th>
           </tr>
         </thead>
+        <RingLoader color="#d65836" loading={loading} size={50} />
         <tbody>
             {users &&
             users.map((item,index)=>{
@@ -67,10 +92,10 @@ import { Table,Button } from "react-bootstrap";
                         <td>{item?.copiescount}</td>
                         <td>{item?.id}</td>
                         <td>
-                    {/* <Button onClick={() => handleEdit(item.id)}>
+                    <Button onClick={() => handleEdit(item.id)}>
                       {" "}
                       Update{" "}
-                    </Button> */}
+                    </Button>
                   </td>
                   <td>
                     <Button onClick={() => handleDelete(item.id)}>
@@ -87,4 +112,4 @@ import { Table,Button } from "react-bootstrap";
         </div>
     )
  }
- export default Dashboard;
+ export default Admin;
